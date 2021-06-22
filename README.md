@@ -22,8 +22,10 @@ jar -Xmx256m -DmappingFilePath=mapping.txt -jar portfowarding-jar-with-dependenc
 ~~~
 
 #### 2. use docker image
+docker image: blueoom/portforwarding
+
 ~~~ shell script
-docker run -tdi --network=host -e mappingFilePath=mapping.txt -v mapping.txt:/home/portforwarding/mapping.txt blueoom/portfowarding 
+docker run -tdi --network=host -e mappingFilePath=mapping.txt -v mapping.txt:/home/portforwarding/mapping.txt blueoom/portforwarding 
 ~~~
 > suggest to use host network for multi port mapping
 >
