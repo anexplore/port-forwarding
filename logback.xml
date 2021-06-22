@@ -1,0 +1,20 @@
+<configuration>
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>logs/portforwarding.log</file>
+    <append>true</append>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>logs/portforwarding.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>30</maxHistory> 
+      <totalSizeCap>3GB</totalSizeCap>
+    </rollingPolicy>
+
+    <immediateFlush>true</immediateFlush>
+    <encoder>
+      <pattern>%date{yyyy-MM-dd HH:mm:ss,SSS} %level [%thread] [%logger\(%line\)] - %msg%n</pattern>
+    </encoder>
+  </appender>
+        
+  <root level="INFO">
+    <appender-ref ref="FILE" />
+  </root>
+</configuration>
