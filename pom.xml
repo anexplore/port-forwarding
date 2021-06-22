@@ -4,7 +4,7 @@
   <groupId>com.fd</groupId>
   <artifactId>portforwarding</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <name>portforwarding</name>
 
 
