@@ -15,6 +15,22 @@ this project will read config from java system properties and system env, proper
 * ioMaxBacklog, socket backlog default 64
 * openLoggingHandler, detail netty debug logging
 
+### mapping file 
+default port mapping file is **mapping.txt**, in this file you add multi port mapping lines.
+
+this file format must be **"one line for one mapping, local address(host:port) and remote address(host:port) split by ,"**
+
+use \# to add comment
+
+eg:
+>\# mapping local host 80 to local host 8080, port 80's any data will forward to 8080
+>
+>127.0.0.1:80,127.0.0.1:8080    
+>
+>127.0.0.1:9090,xxx.xxx.xx.xx:1234
+>
+>127.0.0.1:9091,xxx.xxx.xx.xx:1235
+
 ### how to use
 #### 1. use released jar
 ~~~ shell script
@@ -28,9 +44,9 @@ docker image: blueoom/portforwarding
 docker run -tdi --network=host -e mappingFilePath=mapping.txt -v mapping.txt:/home/portforwarding/mapping.txt blueoom/portforwarding 
 ~~~
 > suggest to use host network for multi port mapping
->
+
 > use -v to set mapping.txt
->
+
 > use -e to set configs, use -e JVM_ARGS="-Xmx512m" to set jvm args 
->
+
 > suggest to use docker compose to manage service containers
