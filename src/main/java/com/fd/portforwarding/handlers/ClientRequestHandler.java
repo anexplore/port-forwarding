@@ -31,7 +31,6 @@ public class ClientRequestHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        ctx.fireChannelActive();
         // create connect to remote address
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(ctx.channel().eventLoop())
@@ -39,13 +38,14 @@ public class ClientRequestHandler extends ChannelInboundHandlerAdapter {
                 .option(ChannelOption.TCP_NODELAY, true)
                 .option(ChannelOption.SO_KEEPALIVE, false)
                 .option(ChannelOption.AUTO_READ, false)
-                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, config.timeout())
+                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, config.connectTimeout())
                 .option(ChannelOption.SO_REUSEADDR, true);
         bootstrap.handler(new ChannelInitializer<SocketChannel>() {
             @Override
             protected void initChannel(SocketChannel socketChannel) throws Exception {
                 ChannelPipeline pipeline = socketChannel.pipeline();
                 pipeline.addLast(new IdleStateHandler(0, 0, config.timeout(), TimeUnit.MILLISECONDS));
+                pipeline.addLast(new StateHandler());
                 pipeline.addLast(new DataTransferHandler(ctx.channel()));
                 if (config.openLoggingHandler()) {
                     pipeline.addFirst(Handlers.LOGGING_HANDLER);
@@ -65,6 +65,7 @@ public class ClientRequestHandler extends ChannelInboundHandlerAdapter {
                 }
             }
         });
+        ctx.fireChannelActive();
     }
 
     @Override

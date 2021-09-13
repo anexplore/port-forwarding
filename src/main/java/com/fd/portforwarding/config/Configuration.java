@@ -9,6 +9,11 @@ public interface Configuration {
     int timeout();
 
     /**
+     * @return mills timeout for tcp connect
+     */
+    int connectTimeout();
+
+    /**
      * @return port forward mapping file path
      */
     String mappingFilePath();

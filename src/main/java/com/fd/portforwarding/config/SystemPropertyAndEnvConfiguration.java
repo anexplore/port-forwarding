@@ -12,7 +12,7 @@ public class SystemPropertyAndEnvConfiguration implements Configuration {
      * @param key key
      * @return value or {@code defaultValue} if pro is empty
      */
-    public static String getFromEnvOrPro(String key, String defaultValue) {
+    public static String getFromProOrEnv(String key, String defaultValue) {
         String pro = System.getProperty(key);
         if (isNullOrEmpty(pro)) {
             pro = System.getenv(key);
@@ -22,32 +22,37 @@ public class SystemPropertyAndEnvConfiguration implements Configuration {
 
     @Override
     public int timeout() {
-        return Integer.parseInt(getFromEnvOrPro(CONFIG_PREFIX + "timeout", "10000"));
+        return Integer.parseInt(getFromProOrEnv(CONFIG_PREFIX + "timeout", "10000"));
+    }
+
+    @Override
+    public int connectTimeout() {
+        return Integer.parseInt(getFromProOrEnv(CONFIG_PREFIX + "connectTimeout", "10000"));
     }
 
     @Override
     public String mappingFilePath() {
-        return getFromEnvOrPro(CONFIG_PREFIX + "mappingFilePath", "mapping.txt");
+        return getFromProOrEnv(CONFIG_PREFIX + "mappingFilePath", "mapping.txt");
     }
 
     @Override
     public int ioAcceptThreadNumber() {
-        return Integer.parseInt(getFromEnvOrPro(CONFIG_PREFIX + "ioAcceptThreadNumber", Runtime.getRuntime().availableProcessors() + ""));
+        return Integer.parseInt(getFromProOrEnv(CONFIG_PREFIX + "ioAcceptThreadNumber", Runtime.getRuntime().availableProcessors() + ""));
     }
 
     @Override
     public int ioWorkThreadNumber() {
-        return Integer.parseInt(getFromEnvOrPro(CONFIG_PREFIX + "ioWorkThreadNumber", Runtime.getRuntime().availableProcessors() + ""));
+        return Integer.parseInt(getFromProOrEnv(CONFIG_PREFIX + "ioWorkThreadNumber", Runtime.getRuntime().availableProcessors() + ""));
     }
 
     @Override
     public int ioMaxBacklog() {
-        return Integer.parseInt(getFromEnvOrPro(CONFIG_PREFIX + "ioMaxBacklog", 64 + ""));
+        return Integer.parseInt(getFromProOrEnv(CONFIG_PREFIX + "ioMaxBacklog", 64 + ""));
     }
 
     @Override
     public boolean openLoggingHandler() {
-        return Boolean.parseBoolean(getFromEnvOrPro(CONFIG_PREFIX + "openLoggingHandler", "" + false));
+        return Boolean.parseBoolean(getFromProOrEnv(CONFIG_PREFIX + "openLoggingHandler", "" + false));
     }
 
     private static boolean isNullOrEmpty(String string) {

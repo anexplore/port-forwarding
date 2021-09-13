@@ -9,7 +9,8 @@ this project may be helpful when you want to do some stuff on data flow, based o
 this project will read config from java system properties and system env, properties first.
 
 * mappingFilePath,  port mapping file 
-* timeout, io timeout in mills
+* timeout, io timeout in mills for read/write idle timeout, if you connection is long-connection you may need to set timeout to bigger one
+* connectTimeout, io timeout in mills for connection to target remote port
 * ioAcceptThreadNumber, accept thread number default system cores
 * ioWorkThreadNumber, work thread number default system cores
 * ioMaxBacklog, socket backlog default 64
